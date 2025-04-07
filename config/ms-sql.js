@@ -18,7 +18,6 @@ const config = {
 export default async function connectToDatabase() {
   try {
     const pool = await sql.connect(config);
-    console.log('Connected to the MS SQL database.');
     return pool; // Return the connection pool
   } catch (err) {
     console.error('Database connection failed:', err);

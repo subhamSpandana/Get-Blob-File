@@ -11,25 +11,6 @@ const app = express();
 
 app.use(express.json());
 
-app.get('/', async (req, res) => {
-  try {
-    await connectToDatabase(); 
-    res.send('Server is running on port 3000 and connected to the database.');
-  } catch (err) {
-    res.status(500).send('Failed to connect to the database.');
-  }
-});
-
-app.get('/data', async (req, res) => {
-  try {
-    const pool = await connectToDatabase(); 
-    const result = await pool.request().query('SELECT * FROM Tbl_BureauResponseTest'); // Query the table
-    res.json(result.recordset); 
-  } catch (err) {
-    console.error('Failed to fetch data from the table:', err);
-    res.status(500).send('Failed to fetch data from the table.');
-  }
-});
 
 // Define a route to download the XML file based on VoterID
 app.get('/download', async (req, res) => {
@@ -121,7 +102,7 @@ app.get('/showBlob', async (req, res) => {
   }
 });
 
-const PORT = 3000;
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
